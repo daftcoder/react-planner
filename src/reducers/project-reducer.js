@@ -1,6 +1,7 @@
 import { history } from '../utils/export';
 import {
   LOAD_PROJECT,
+  EXPORT_TO_IMAGE,
   NEW_PROJECT,
   OPEN_CATALOG,
   SELECT_TOOL_EDIT,
@@ -33,7 +34,7 @@ import {
   ADD_CIRCULAR_GUIDE,
   REMOVE_HORIZONTAL_GUIDE,
   REMOVE_VERTICAL_GUIDE,
-  REMOVE_CIRCULAR_GUIDE
+  REMOVE_CIRCULAR_GUIDE,
 } from '../constants';
 
 import { Project } from '../class/export';
@@ -46,6 +47,9 @@ export default function (state, action) {
 
     case LOAD_PROJECT:
       return Project.loadProject(state, action.sceneJSON).updatedState;
+
+    case EXPORT_TO_IMAGE:
+      return Project.exportToImage(state).updatedState;
 
     case OPEN_CATALOG:
       return Project.openCatalog(state).updatedState;
@@ -126,17 +130,17 @@ export default function (state, action) {
 
     case ALTERATE_STATE:
       return Project.setAlterate( state ).updatedState;
-    
+
     case SET_MODE:
       return Project.setMode(state, action.mode).updatedState;
-    
+
     case ADD_HORIZONTAL_GUIDE:
       state = state.merge({ sceneHistory: history.historyPush(state.sceneHistory, state.scene) });
       return Project.addHorizontalGuide(state, action.coordinate).updatedState;
-    
+
     case ADD_VERTICAL_GUIDE:
       return Project.addVerticalGuide(state, action.coordinate).updatedState;
-    
+
     case ADD_CIRCULAR_GUIDE:
       return Project.addCircularGuide(state, action.x, action.y, action.radius).updatedState;
 

@@ -15,6 +15,7 @@ import {
   HorizontalGuide,
   VerticalGuide
 } from '../class/export';
+import {browserDownload, browserDownloadSVG} from '../utils/browser';
 
 class Project{
 
@@ -36,6 +37,41 @@ class Project{
 
   static loadProject(state, sceneJSON) {
     state = new State({ scene: sceneJSON, catalog: state.catalog.toJS() });
+
+    return { updatedState: state };
+  }
+
+  static exportToImage(state) {
+    console.log('i am here');
+    const temp = document.getElementsByClassName('testSVGClass');
+    const element = temp[0].children[0].children[1].children[1];
+
+    const container = element.children[1].children[0];
+    const back = container.children[0];
+    const rules = container.children[1].children[0].children[0];
+    back.setAttribute('fill-opacity', "0");
+    back.setAttribute('fill', "none");
+    rules.setAttribute('style', 'display: none;');
+    debugger;
+
+    var serializer = new XMLSerializer();
+    var source0 = serializer.serializeToString(element);
+    let source = '<svg>' + source0 + '</svg>'
+
+    if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    }
+    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+    var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+
+    browserDownloadSVG(url);
+
+    back.setAttribute('fill', "#FFF");
+    back.setAttribute('fill-opacity', "1");
+    rules.setAttribute('style', '');
 
     return { updatedState: state };
   }

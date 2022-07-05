@@ -16,6 +16,18 @@ export function browserDownload(json) {
   document.body.removeChild(fileOutputLink);
 }
 
+export function browserDownloadSVG(svg) {
+  let fileOutputLink = document.createElement('a');
+
+  let filename = 'svg' + Date.now() + '.svg';
+  fileOutputLink.setAttribute('download', filename);
+  fileOutputLink.href = svg;
+  fileOutputLink.style.display = 'none';
+  document.body.appendChild(fileOutputLink);
+  fileOutputLink.click();
+  document.body.removeChild(fileOutputLink);
+}
+
 export function browserUpload() {
   return new Promise(function (resolve, reject) {
 

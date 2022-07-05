@@ -348,6 +348,7 @@ export default function Viewer2D(
         /> : null }
       </div>
       <ReactSVGPanZoom
+        className="testSVGClass"
         style={{ gridColumn: 2, gridRow: 2 }}
         width={width - rulerSize}
         height={height - rulerSize}

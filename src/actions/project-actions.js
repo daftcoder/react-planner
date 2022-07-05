@@ -1,6 +1,7 @@
 import {
   NEW_PROJECT,
   LOAD_PROJECT,
+  EXPORT_TO_IMAGE,
   SAVE_PROJECT,
   OPEN_CATALOG,
   SELECT_TOOL_EDIT,
@@ -39,6 +40,12 @@ export function loadProject(sceneJSON) {
   return {
     type: LOAD_PROJECT,
     sceneJSON
+  };
+}
+
+export function exportToImage() {
+  return {
+    type: EXPORT_TO_IMAGE
   };
 }
 
